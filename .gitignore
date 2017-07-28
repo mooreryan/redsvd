@@ -1,0 +1,9 @@
+.lock-wscript
+.waf*
+bin
+include
+lib
+output*
+*.pyc
+redsvd_build
+scratch
