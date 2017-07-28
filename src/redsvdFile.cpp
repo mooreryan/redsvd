@@ -59,6 +59,8 @@ namespace REDSVD{
 
       int num_rows = M.rows();
 
+      fprintf(outfp, "%d\n", num_rows);
+
       for (int r1 = 0; r1 < num_rows - 1; ++r1) {
         if (r1 % 100 == 0) {
           fprintf(stderr,
