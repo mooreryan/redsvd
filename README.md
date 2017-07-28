@@ -6,6 +6,16 @@ A fork of the original repo from google code (find it [here](https://code.google
 
 *Note*: If you want to build the tests and samples, just uncomment out the commented lines in `wscript` and remove the very last line.
 
+To install
+
+```
+$ git clone https://github.com/mooreryan/redsvd.git
+$ cd redsvd
+$ make
+```
+
+You'll need a C++ compiler as well as Python to run the `waf` build script.
+
 ## Changes to the original
 
 When using sparse matrices and the SVD option, the program spits out some additional files:
