@@ -124,6 +124,7 @@ namespace REDSVD{
         throw string("cannot open ") + fn;
       }
 
+      fprintf("%d %d\n", M.rows(), M.cols());
       for (int i = 0; i < M.rows(); ++i){
         /* print first element of the line */
         fprintf(outfp, "%+f",  M(i, 0));
@@ -144,6 +145,7 @@ namespace REDSVD{
         throw string("cannot open ") + fn;
       }
 
+      fprintf("%d 1\n", V.rows());
       for (int i = 0; i < V.rows(); ++i){
         fprintf(outfp, "%+f\n", V(i));
       }
@@ -224,34 +226,35 @@ namespace REDSVD{
     writeVector_(fn + ".S", A.singularValues());
     writeMatrix_(fn + ".V", A.matrixV());
 
-    /* And these are the terms in latent space in the context of
-       lsa.rb */
-    MatrixXf US = A.matrixU() * A.singularValues().asDiagonal();
+    // Actually, we want these with only a certain number of topics
+    // /* And these are the terms in latent space in the context of
+    //    lsa.rb */
+    // MatrixXf US = A.matrixU() * A.singularValues().asDiagonal();
 
-    /* In the context of lsa.rb, these are the documents in latent
-       space */
-    MatrixXf VS = A.matrixV() * A.singularValues().asDiagonal();
+    // /* In the context of lsa.rb, these are the documents in latent
+    //    space */
+    // MatrixXf VS = A.matrixV() * A.singularValues().asDiagonal();
 
-    writeMatrix_(fn + ".US", US);
-    writeMatrix_(fn + ".VS", VS);
+    // writeMatrix_(fn + ".US", US);
+    // writeMatrix_(fn + ".VS", VS);
 
-    /* This can get expensive if there are a lot of terms, which there
-       will be. So only calculate it on the docs and the docs vs
-       terms. */
+    // /* This can get expensive if there are a lot of terms, which there
+    //    will be. So only calculate it on the docs and the docs vs
+    //    terms. */
 
-    if (US.rows() < VS.rows()) {
-      writeAVADis_(fn + ".US.dis", US);
-      writeABDis_(fn + ".US_to_VS.dis", US, VS);
-    } else if (VS.rows() < US.rows()) {
-      writeAVADis_(fn + ".VS.dis", VS);
-      writeABDis_(fn + ".VS_to_US.dis", VS, US);
-    } else { /* if they are the same, just print both */
-      writeAVADis_(fn + ".US.dis", US);
-      writeABDis_(fn + ".US_to_VS.dis", US, VS);
+    // if (US.rows() < VS.rows()) {
+    //   writeAVADis_(fn + ".US.dis", US);
+    //   writeABDis_(fn + ".US_to_VS.dis", US, VS);
+    // } else if (VS.rows() < US.rows()) {
+    //   writeAVADis_(fn + ".VS.dis", VS);
+    //   writeABDis_(fn + ".VS_to_US.dis", VS, US);
+    // } else { /* if they are the same, just print both */
+    //   writeAVADis_(fn + ".US.dis", US);
+    //   writeABDis_(fn + ".US_to_VS.dis", US, VS);
 
-      writeAVADis_(fn + ".VS.dis", VS);
-      writeABDis_(fn + ".VS_to_US.dis", VS, US);
-    }
+    //   writeAVADis_(fn + ".VS.dis", VS);
+    //   writeABDis_(fn + ".VS_to_US.dis", VS, US);
+    // }
   }
 
   void writeMatrix(const string& fn, const REDSVD::RedSVDIncr& A){
