@@ -50,71 +50,71 @@ namespace REDSVD{
 
   namespace {
 
-    void writeAVADis_(const string& fn, const MatrixXf& M){
-      cout << "write " << fn << endl;
-      FILE* outfp = fopen(fn.c_str(), "wb");
-      if (outfp == NULL){
-        throw string("cannot open ") + fn;
-      }
+    // void writeAVADis_(const string& fn, const MatrixXf& M){
+    //   cout << "write " << fn << endl;
+    //   FILE* outfp = fopen(fn.c_str(), "wb");
+    //   if (outfp == NULL){
+    //     throw string("cannot open ") + fn;
+    //   }
 
-      int num_rows = M.rows();
+    //   int num_rows = M.rows();
 
-      fprintf(outfp, "%d\n", num_rows);
+    //   fprintf(outfp, "%d\n", num_rows);
 
-      for (int r1 = 0; r1 < num_rows - 1; ++r1) {
-        if (r1 % 100 == 0) {
-          fprintf(stderr,
-                  "Writing row %d of %d\r",
-                  r1,
-                  num_rows);
-        }
+    //   for (int r1 = 0; r1 < num_rows - 1; ++r1) {
+    //     if (r1 % 100 == 0) {
+    //       fprintf(stderr,
+    //               "Writing row %d of %d\r",
+    //               r1,
+    //               num_rows);
+    //     }
 
-        for (int r2 = r1 + 1; r2 < num_rows; ++r2) {
-          fprintf(outfp, "%d %d %+f\n", r1, r2,
-                  cosine_dissimilarity(M.row(r1), M.row(r2)));
-        }
-      }
+    //     for (int r2 = r1 + 1; r2 < num_rows; ++r2) {
+    //       fprintf(outfp, "%d %d %+f\n", r1, r2,
+    //               cosine_dissimilarity(M.row(r1), M.row(r2)));
+    //     }
+    //   }
 
-      fclose(outfp);
+    //   fclose(outfp);
 
-    }
+    // }
 
     /* Rows will be rows from M1 and columns will be the dissimilarity
        scores of this row with each row in M2. So this 2nd row, 3rd
        column would be the dissimilarity between M1.row(1) and
        M2.row(2). */
-    void writeABDis_(const string& fn,
-                     const MatrixXf& M1,
-                     const MatrixXf& M2){
+    // void writeABDis_(const string& fn,
+    //                  const MatrixXf& M1,
+    //                  const MatrixXf& M2){
 
-      cout << "write " << fn << endl;
-      FILE* outfp = fopen(fn.c_str(), "wb");
-      if (outfp == NULL){
-        throw string("cannot open ") + fn;
-      }
+    //   cout << "write " << fn << endl;
+    //   FILE* outfp = fopen(fn.c_str(), "wb");
+    //   if (outfp == NULL){
+    //     throw string("cannot open ") + fn;
+    //   }
 
-      double cos_dis = 0;
-      vector<double> dists;
-      vector<double>::iterator iter;
+    //   double cos_dis = 0;
+    //   vector<double> dists;
+    //   vector<double>::iterator iter;
 
-      for (int i1 = 0; i1 < M1.rows(); ++i1) {
-        for (int i2 = 0; i2 < M2.rows(); ++i2) {
-          cos_dis = cosine_dissimilarity(M1.row(i1), M2.row(i2));
+    //   for (int i1 = 0; i1 < M1.rows(); ++i1) {
+    //     for (int i2 = 0; i2 < M2.rows(); ++i2) {
+    //       cos_dis = cosine_dissimilarity(M1.row(i1), M2.row(i2));
 
-          dists.push_back(cos_dis);
-        }
+    //       dists.push_back(cos_dis);
+    //     }
 
-        iter = dists.begin();
-        fprintf(outfp, "%+f", *iter);
-        for (iter = dists.begin() + 1; iter < dists.end(); ++iter) {
-          fprintf(outfp, " %+f", *iter);
-        }
-        fprintf(outfp, "\n");
-        dists.clear();
-      }
+    //     iter = dists.begin();
+    //     fprintf(outfp, "%+f", *iter);
+    //     for (iter = dists.begin() + 1; iter < dists.end(); ++iter) {
+    //       fprintf(outfp, " %+f", *iter);
+    //     }
+    //     fprintf(outfp, "\n");
+    //     dists.clear();
+    //   }
 
-      fclose(outfp);
-    }
+    //   fclose(outfp);
+    // }
 
 
     void writeMatrix_(const string& fn, const MatrixXf& M){
@@ -124,7 +124,7 @@ namespace REDSVD{
         throw string("cannot open ") + fn;
       }
 
-      fprintf("%d %d\n", M.rows(), M.cols());
+      fprintf(outfp, "%ld %ld\n", M.rows(), M.cols());
       for (int i = 0; i < M.rows(); ++i){
         /* print first element of the line */
         fprintf(outfp, "%+f",  M(i, 0));
@@ -145,7 +145,7 @@ namespace REDSVD{
         throw string("cannot open ") + fn;
       }
 
-      fprintf("%d 1\n", V.rows());
+      fprintf(outfp, "%ld 1\n", V.rows());
       for (int i = 0; i < V.rows(); ++i){
         fprintf(outfp, "%+f\n", V(i));
       }
